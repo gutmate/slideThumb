@@ -30,11 +30,28 @@ var SlideThumb = (function () {
         });
     }
     /**
-     * 이미지 변경
-     * @param {obeject} el
+     * 뷰어 생성
      */
-    function changeBigImg(el, imgUrl) {
-        el.find('.img').find('img').attr('src', imgUrl); // 이미지 변경
+    function makeViewer(el) {
+        var _html = [];
+        _html.push('<div class="img_viewer">');
+        _html.push('    <div class="img_box">');
+        _html.push('        <div class="img">');
+        _html.push('            <img src="" alt="이미지">');
+        _html.push('        </div>');
+        _html.push('        <div class="arrow">');
+        _html.push('            <button class="btn_prev">이전</button>');
+        _html.push('            <button class="btn_next">다음</button>');
+        _html.push('        </div>');
+        _html.push('    </div>');
+        _html.push('    <div class="info">');
+        _html.push('        <div class="subject">제목</div>');
+        _html.push('        <div class="cont">내용</div>');
+        _html.push('    </div>');
+        _html.push('</div>');
+        _html = _html.join('');
+
+        el.find('.img_list').append(_html);
     }
     /**
      * 뷰어 열기
@@ -59,6 +76,13 @@ var SlideThumb = (function () {
         el.find('.img_thumb[data-idx-row="' + idx + '"]').last().after(viewer);
     }
     /**
+     * 이미지 변경
+     * @param {obeject} el
+     */
+    function changeBigImg(el, imgUrl) {
+        el.find('.img').find('img').attr('src', imgUrl); // 이미지 변경
+    }
+    /**
      * 스크롤 이동
      * @param {boolean} animation 효과 유 무 설정
      */
@@ -79,6 +103,9 @@ var SlideThumb = (function () {
 
         var imgUrl = '';
         var $elems = $(elems);
+
+        makeViewer($elems);
+
         var _col = options.column;
         var $viewer = $elems.find('.img_viewer');
 

@@ -14,6 +14,7 @@
  */
 
 var SlideThumb = (function () {
+    // defaults options
     var defaults = {
         column: 5
     };
@@ -21,7 +22,7 @@ var SlideThumb = (function () {
     /**
      * 목록 인덱싱
      */
-    function _setIdx(el, column) {
+    function setIdx(el, column) {
         el.find('.img_thumb').each(function (idx, item) {
             var idxRow = Math.floor(idx / column) + 1;
             $(item).attr('data-idx', idx + 1);
@@ -39,28 +40,29 @@ var SlideThumb = (function () {
      * 뷰어 열기
      * @param {number} index 열려야 할 index
      */
-    function _openViewer(index) {
+    function openViewer(index) {
 
     }
     /**
      * 뷰어 닫기
      */
-    function _closeViewer() {
+    function closeViewer() {
 
     }
     /**
      * 뷰어 위치 이동
-     * @param {obeject} el 뷰어 요소
+     * @param {obeject} el 상위 부모
+     * @param {obeject} viewer 뷰어 요소
      * @param {obeject} idx 이동해야 할 위치
      */
-    function _moveViewer(el, idx) {
-        $('.img_thumb[data-idx-row="' + idx + '"]').last().after(el);
+    function moveViewer(el, viewer, idx) {
+        el.find('.img_thumb[data-idx-row="' + idx + '"]').last().after(viewer);
     }
     /**
      * 스크롤 이동
      * @param {boolean} animation 효과 유 무 설정
      */
-    function _moveScroll(el, animation) {
+    function moveScroll(el, animation) {
         var _top = el.offset().top - 20;
 
         if (animation) {
@@ -71,7 +73,7 @@ var SlideThumb = (function () {
     }
 
     function SlideThumb(elems, options) {
-       $.extend(defaults, options);
+        $.extend(defaults, options);
         this.elems = $(elems);
         this.options = defaults;
 
@@ -82,7 +84,7 @@ var SlideThumb = (function () {
 
         console.log('SlideThumb Run.');
 
-        _setIdx($elems, _col); // 목록 인덱싱
+        setIdx($elems, _col); // 목록 인덱싱
 
         // 목록 선택
         $elems.on('click', '.btn_thumb', function () {
@@ -104,8 +106,8 @@ var SlideThumb = (function () {
             console.log(imgUrl + ', 컬럼: ' + _col + ', index: ' + idx + ', Row: ' + idxRow);
 
             changeBigImg($viewer, imgUrl); // 뷰어 이미지 변경
-            _moveViewer($viewer, idxRow); // 뷰어 위치 이동
-            _moveScroll($list, true); // 스크롤 맞춤
+            moveViewer($elems, $viewer, idxRow); // 뷰어 위치 이동
+            moveScroll($list, true); // 스크롤 맞춤
         });
     }
 
@@ -126,7 +128,7 @@ var SlideThumb = (function () {
         var options = slideThumb.options;
         var _col = options.column;
 
-        _setIdx($elems, _col); // 목록 인덱싱
+        setIdx($elems, _col); // 목록 인덱싱
 
         console.log('update');
     };

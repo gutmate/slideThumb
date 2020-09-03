@@ -93,6 +93,7 @@ var SlideThumb = (function () {
     }
     /**
      * 스크롤 이동
+     * @param {object} el 목록
      * @param {boolean} animation 효과 유 무 설정
      */
     function moveScroll(el, animation) {
@@ -162,7 +163,7 @@ var SlideThumb = (function () {
             changeBigImg($viewer, imgUrl); // 뷰어 이미지 변경
             moveViewer($elems, $viewer, idxRow); // 뷰어 위치 이동 idxRow
             openViewer($elems, idx);
-            // moveScroll($list, true); // 스크롤 맞춤
+            moveScroll($target, false); // 스크롤 맞춤
         });
     }
 

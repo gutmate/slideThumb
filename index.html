@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" type="text/css" href="resource/css/jquery-slide-img.css">
+<title>imageThumb</title>
+<style>
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,time, mark, audio, video, button {margin:0; padding:0; border: 0; box-sizing: border-box;}
+ol, ul,li {list-style: none;}
+html, body {width:100%; height:100%; }
+img {max-width:100%; vertical-align:top; border:0;}
+a{text-decoration: none; color:#000; }
+button {border:0; background-color:transparent; font-family:inherit; font-size:inherit; cursor:pointer;}
+table { border-collapse:collapse; }
+body {font-family:'NotoSansKR', sans-serif; word-break:keep-all; word-wrap:break-word;}
+.container {
+    background-color: #999;
+    min-height: 100vh;
+    padding: 20px;
+}
+.content {
+    max-width: 1200px;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+.btn_wrap {
+    padding: 10px;
+    text-align: center;
+}
+.btn_wrap .btn_more {
+    width: 300px;
+    height: 50px;
+    background-color: #444;
+    color: #fff;
+}
+</style>
+</head>
+<body>
+    <div class="wrap">
+        <div id="container" class="container">
+            <div id="content" class="content">
+                <div class="slide_img_wrap" id="slideImage">
+                    <div class="img_list">
+                        <div class="img_thumb">
+                            <button type="button" class="btn_thumb">
+                                <img src="resource/images/slide_img/img_a.jpg" alt="">
+                            </button>
+                        </div>
+                        <div class="img_thumb">
+                            <button type="button" class="btn_thumb">
+                                <img src="resource/images/slide_img/img_b.jpg" alt="">
+                            </button>
+                        </div>
+                        <div class="img_thumb">
+                            <button type="button" class="btn_thumb">
+                                <img src="resource/images/slide_img/img_c.jpg" alt="">
+                            </button>
+                        </div>
+                        <div class="img_thumb">
+                            <button type="button" class="btn_thumb">
+                                <img src="resource/images/slide_img/img_d.jpg" alt="">
+                            </button>
+                        </div>
+                        <div class="img_thumb">
+                            <button type="button" class="btn_thumb">
+                                <img src="resource/images/slide_img/img_a.jpg" alt="">
+                            </button>
+                        </div>
+                        <div class="img_thumb">
+                            <button type="button" class="btn_thumb">
+                                <img src="resource/images/slide_img/img_b.jpg" alt="">
+                            </button>
+                        </div>
+                        <div class="img_thumb">
+                            <button type="button" class="btn_thumb">
+                                <img src="resource/images/slide_img/img_c.jpg" alt="">
+                            </button>
+                        </div>
+                        <div class="img_thumb">
+                            <button type="button" class="btn_thumb">
+                                <img src="resource/images/slide_img/img_d.jpg" alt="">
+                            </button>
+                        </div>
+
+                        <!-- 동적 생성 -->
+                        <div class="img_viewer">
+                            <div class="img_box">
+                                <div class="img">
+                                    <img src="" alt="이미지">
+                                </div>
+                                <div class="arrow">
+                                    <button class="btn_prev">이전</button>
+                                    <button class="btn_next">다음</button>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <div class="subject">제목</div>
+                                <div class="cont">내용</div>
+                            </div>
+
+                        </div>
+                        <!-- // 동적 생성 -->
+                    </div>
+                </div>
+                <div class="btn_wrap">
+                    <button type="button" class="btn_more">더보기</button>
+                </div>
+            </div><!-- //content -->
+        </div><!-- //container -->
+    </div><!-- //wrap -->
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="resource/js/jquery-slide-img.js"></script>
+<script>
+    // 슬라이드 선언
+    var slideImg = SlideThumb('#slideImage', {
+        column: 3
+    });
+
+    // 데이터 연동 부분
+
+    /**
+     * 데이터 가져오기
+     */
+    function getData() {
+
+        slideImg.update(); // 슬라이드 업데이트
+    }
+</script>
+</html>

@@ -23,11 +23,15 @@ var SlideThumb = (function () {
      * 목록 인덱싱
      */
     function setIdx(el, column) {
+        var max = 0;
         el.find('.img_thumb').each(function (idx, item) {
             var idxRow = Math.floor(idx / column) + 1;
             $(item).attr('data-idx', idx + 1);
             $(item).attr('data-idx-row', idxRow);
+            max = idx;
         });
+
+        return max + 1;
     }
     /**
      * 뷰어 생성
@@ -111,6 +115,9 @@ var SlideThumb = (function () {
         this.elems = $(elems);
         this.options = defaults;
 
+        var _listMin = 1;
+        var _listMax = 0;
+
         var $elems = $(elems);
 
         makeViewer($elems);
@@ -120,7 +127,7 @@ var SlideThumb = (function () {
 
         console.log('SlideThumb Run.');
 
-        setIdx($elems, _col); // 목록 인덱싱
+        _listMax = setIdx($elems, _col); // 목록 인덱싱
 
         // 목록 선택
         $elems.on('click', '.btn_thumb', function () {
@@ -145,20 +152,24 @@ var SlideThumb = (function () {
         // 버튼 선택
         $elems.on('click', '.btn_change_thumb', function () {
             var $this = $(this);
-            var idx = $viewer.attr('data-idx');
+            var idx = Number($viewer.attr('data-idx'));
 
             if ($this.hasClass('btn_next')) {
-                // 뷰어 다음 목록 으로 이동
+                if (idx === _listMax) {
+                    return;
+                }
                 idx++;
                 console.log('next');
             } else {
-                // 뷰어 이전 목록 으로 이동
+                if (idx === _listMin) {
+                    return;
+                }
                 idx--;
                 console.log('prev');
             }
 
             var $target = $elems.find('.img_thumb').filter('[data-idx="' + idx + '"]');
-            var idxRow = $target.attr('data-idx-row');
+            var idxRow = Number($target.attr('data-idx-row'));
             var imgUrl = $target.find('img').attr('src'); // 썸네일 이미지
             changeBigImg($viewer, imgUrl); // 뷰어 이미지 변경
             moveViewer($elems, $viewer, idxRow); // 뷰어 위치 이동 idxRow

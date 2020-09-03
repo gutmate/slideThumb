@@ -40,8 +40,8 @@ var SlideThumb = (function () {
         _html.push('            <img src="" alt="이미지">');
         _html.push('        </div>');
         _html.push('        <div class="arrow">');
-        _html.push('            <button class="btn_prev">이전</button>');
-        _html.push('            <button class="btn_next">다음</button>');
+        _html.push('            <button class="btn_change_thumb btn_prev">이전</button>');
+        _html.push('            <button class="btn_change_thumb btn_next">다음</button>');
         _html.push('        </div>');
         _html.push('    </div>');
         _html.push('    <div class="info">');
@@ -135,6 +135,20 @@ var SlideThumb = (function () {
             changeBigImg($viewer, imgUrl); // 뷰어 이미지 변경
             moveViewer($elems, $viewer, idxRow); // 뷰어 위치 이동
             moveScroll($list, true); // 스크롤 맞춤
+        });
+
+        // 버튼 선택
+        $elems.on('click', '.btn_change_thumb', function () {
+            var $this = $(this);
+            if ($this.hasClass('btn_next')) {
+                // 뷰어 다음 목록 으로 이동
+
+                console.log('next');
+            } else {
+                // 뷰어 이전 목록 으로 이동
+
+                console.log('prev');
+            }
         });
     }
 

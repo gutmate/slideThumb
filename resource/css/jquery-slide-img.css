@@ -14,6 +14,7 @@
 
 .slide_img_wrap .img_viewer {
     display: none;
+    position: relative;
     width: 100%;
     height: 650px;
     margin: 3px;
@@ -53,4 +54,41 @@
     margin-top: 10px;
     font-size: 16px;
     color: #fff;
+}
+.slide_img_wrap .img_viewer .arrow {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+}
+.slide_img_wrap .img_viewer .btn_change_thumb {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 32px;
+    height: 64px;
+    margin-top: -32px;
+}
+.slide_img_wrap .img_viewer .btn_change_thumb:before {
+    position: absolute;
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    margin-top: -23px;
+    border: 2px solid #fff;
+    content: "";
+}
+.slide_img_wrap .img_viewer .btn_next {
+    right: 30px;
+}
+.slide_img_wrap .img_viewer .btn_prev {
+    left: 30px;
+}
+.slide_img_wrap .img_viewer .btn_next:before {
+    right: 9px;
+    transform: rotate(45deg);
+}
+.slide_img_wrap .img_viewer .btn_prev:before {
+    left: 9px;
+    transform: rotate(-135deg);
 }

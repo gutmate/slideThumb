@@ -57,23 +57,32 @@ var SlideThumb = (function () {
      * 뷰어 열기
      * @param {number} index 열려야 할 index
      */
-    function openViewer(index) {
+    function openViewer(el, idx, idxRow) {
+        var $viewer = el.find('.img_viewer');
+        var $list = el.find('.img_thumb').filter('[data-idx="' + idx + '"]');
 
+        $list.addClass('active').siblings().removeClass('active');
+        $viewer.addClass('open').stop().slideDown();
+        $viewer.attr('data-idx', idx);
+        $viewer.attr('data-idx-row', idxRow);
     }
     /**
      * 뷰어 닫기
      */
-    function closeViewer() {
+    function closeViewer(el, list) {
+        var $viewer = el.find('.img_viewer');
 
+        list.removeClass('active');
+        $viewer.addClass('open').stop().slideUp();
     }
     /**
      * 뷰어 위치 이동
      * @param {obeject} el 상위 부모
      * @param {obeject} viewer 뷰어 요소
-     * @param {obeject} idx 이동해야 할 위치
+     * @param {obeject} idxRow 이동해야 할 위치
      */
-    function moveViewer(el, viewer, idx) {
-        el.find('.img_thumb[data-idx-row="' + idx + '"]').last().after(viewer);
+    function moveViewer(el, viewer, idxRow) {
+        el.find('.img_thumb[data-idx-row="' + idxRow + '"]').last().after(viewer);
     }
     /**
      * 이미지 변경
@@ -101,7 +110,6 @@ var SlideThumb = (function () {
         this.elems = $(elems);
         this.options = defaults;
 
-        var imgUrl = '';
         var $elems = $(elems);
 
         makeViewer($elems);
@@ -116,39 +124,45 @@ var SlideThumb = (function () {
         // 목록 선택
         $elems.on('click', '.btn_thumb', function () {
             var $list = $(this).parent();
+            var idx = $list.attr('data-idx'); // 선택 요소 index
+            var idxRow = $list.attr('data-idx-row'); // 선택 요소 컬럼
             if (!$list.hasClass('active')) {
-                // 뷰어 열기
-                $list.addClass('active').siblings().removeClass('active');
-                $viewer.addClass('open').stop().slideDown();
+                openViewer($elems, idx, idxRow);
+                moveViewer($elems, $viewer, idxRow); // 뷰어 위치 이동
             } else {
-                // 뷰어 닫기
-                $list.removeClass('active');
-                $viewer.addClass('open').stop().slideUp();
+                closeViewer($elems, $list);
                 return;
             }
-            imgUrl = $(this).find('img').attr('src'); // 썸네일 이미지
-            var idx = $list.data('idx'); // 선택 요소 index
-            var idxRow = $list.data('idxRow'); // 선택 요소 컬럼
+            var imgUrl = $(this).find('img').attr('src'); // 썸네일 이미지
 
             console.log(imgUrl + ', 컬럼: ' + _col + ', index: ' + idx + ', Row: ' + idxRow);
 
             changeBigImg($viewer, imgUrl); // 뷰어 이미지 변경
-            moveViewer($elems, $viewer, idxRow); // 뷰어 위치 이동
             moveScroll($list, true); // 스크롤 맞춤
         });
 
         // 버튼 선택
         $elems.on('click', '.btn_change_thumb', function () {
             var $this = $(this);
+            var idx = $viewer.attr('data-idx');
+
             if ($this.hasClass('btn_next')) {
                 // 뷰어 다음 목록 으로 이동
-
+                idx++;
                 console.log('next');
             } else {
                 // 뷰어 이전 목록 으로 이동
-
+                idx--;
                 console.log('prev');
             }
+
+            var $target = $elems.find('.img_thumb').filter('[data-idx="' + idx + '"]');
+            var idxRow = $target.attr('data-idx-row');
+            var imgUrl = $target.find('img').attr('src'); // 썸네일 이미지
+            changeBigImg($viewer, imgUrl); // 뷰어 이미지 변경
+            moveViewer($elems, $viewer, idxRow); // 뷰어 위치 이동 idxRow
+            openViewer($elems, idx);
+            // moveScroll($list, true); // 스크롤 맞춤
         });
     }
 
